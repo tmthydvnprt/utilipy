@@ -90,6 +90,22 @@ FIRST_KEY_RE = re.compile(r'.*\s*:\s*[A-Za-z0-9_-]+')
 DOCSTRING_QUOTES = '"""{}"""'
 PACKAGE_VARIABLE_RE = re.compile(r'__.*?__')
 
+DEFAULT_INFO = {
+    'project'    : '',
+    'version'    : '0.1.0',
+    'status'     : 'development',
+    'modifydate' : '',
+    'createdate' : '',
+    'website'    : '',
+    'author'     : '',
+    'email'      : '',
+    'maintainer' : '',
+    'license'    : 'MIT',
+    'copyright'  : '',
+    'copydate'   : datetime.datetime.now().year,
+    'credits'    : ''
+}
+
 def _read_file(file_path=''):
     """read a file into a string. assumes utf-8 encoding."""
     source = ''
@@ -128,16 +144,24 @@ def _replace_docstring_meta(source='', info=None):
 
     return new_source
 
+def extend_copyright_string(copydate):
+    """
+    create string of copyright date, and extend if date is before the current year
+    2015 -> '2015'
+    2014 -> '2014-2015'
+    """
+    current_year = datetime.datetime.now().year
+    copydate_string = '{}-{}'format(copydate, current_year) if copydate < current_year else str(current_year)
+    return copydate_string
 
-def generate(startpath='', info=None, project=''):
+def generate(startpath='', project_info=None, project=''):
     """ 
     generate headers for all py files in project 
     
     example input:
     
     startpath = '/Users/timothydavenport/GitHub/utilipy/'
-    project = 'ende'
-    info = {
+    project_info = {
         'project'    : 'Utilipy',
         'version'    : '0.1.0',
         'status'     : 'development',
@@ -157,7 +181,19 @@ def generate(startpath='', info=None, project=''):
     
     # if no project passed, use the current directory as project name
     project = project if project else [ x for x in startpath.split(os.path.sep) if x][-1]
-
+    
+    # update default info with project into
+    info = copy.deepcopy(DEFAULT_INFO)
+    info.update(project_info)
+    
+    # add info if not defined
+    if 'project' not in info.keys() or info['project'] == '':
+        info['project'] = project
+    if 'copyright' not in info.keys() or info['copyright'] == '':
+        info['copyright'] = project
+    info['copydate'] = extend_copyright_string(info['copydate'])
+    
+    # project init file
     package_init = os.path.join(startpath, project, '__init__.py')
 
     # change directories
