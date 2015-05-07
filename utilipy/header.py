@@ -7,7 +7,7 @@ Auto generate headers for all files in a project
 project    : Utilipy
 version    : 0.1.0
 status     : development
-modifydate : 2015-05-07 05:41:30 -0700
+modifydate : 2015-05-07 05:45:00 -0700
 createdate : 2015-05-07 05:38:00 -0700
 website    : https://github.com/tmthydvnprt/utilipy
 author     : tmthydvnprt
