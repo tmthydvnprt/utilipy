@@ -7,7 +7,7 @@ Auto generate headers for all files in a project
 project    : Utilipy
 version    : 0.1.0
 status     : development
-modifydate : 2015-05-07 06:46:30 -0700
+modifydate : 2015-05-07 06:52:00 -0700
 createdate : 2015-05-07 05:38:00 -0700
 website    : https://github.com/tmthydvnprt/utilipy
 author     : tmthydvnprt
@@ -239,10 +239,7 @@ def generate(startpath='', project_info=None):
             # update meta
             fileinfo = copy.deepcopy(info)
             if relpath in changed:
-                fileinfo['modifydate'] = datetime.datetime.fromtimestamp(
-                    os.path.getmtime(filepath),
-                    dateutil.tz.tzlocal()
-                ).strftime('%Y-%m-%d %H:%M:30 %z')
+                fileinfo['modifydate'] = datetime.datetime.now(dateutil.tz.tzlocal()).strftime('%Y-%m-%d %H:%M:00 %z')
             else:
                 fileinfo['modifydate'] = dates[relpath]['modifydate']
             fileinfo['createdate'] = dates[relpath]['createdate']
