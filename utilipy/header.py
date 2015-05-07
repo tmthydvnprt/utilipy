@@ -4,17 +4,17 @@ header.py
 
 Auto generate headers for all files in a project
 
-project    : utilipy
+project    : Utilipy
 version    : 0.1.0
 status     : development
-modifydate : 2015-05-07 05:18:22 -0700
-createdate : 2015-05-04 06:08:00 -0700
-website    : n/a
+modifydate : 2015-05-07 05:41:30 -0700
+createdate : 2015-05-07 05:38:00 -0700
+website    : https://github.com/tmthydvnprt/utilipy
 author     : tmthydvnprt
 email      : tmthydvnprt@users.noreply.github.com
 maintainer : tmthydvnprt
 license    : MIT
-copyright  : Copyright 2015, utilipy
+copyright  : Copyright 2015, Utilipy
 credits    :
 
 """
@@ -135,7 +135,7 @@ def generate(startpath='', info=None, project=''):
     
     example input:
     
-    startpath = '/Users/timothydavenport/GitHub/ende/'
+    startpath = '/Users/timothydavenport/GitHub/utilipy/'
     project = 'ende'
     info = {
         'project'    : 'Utilipy',
@@ -156,7 +156,7 @@ def generate(startpath='', info=None, project=''):
     """
     
     # if no project passed, use the current directory as project name
-    project = project if project else startpath.split(os.path.sep)[ x for x in paths if x][-1]
+    project = project if project else [ x for x in startpath.split(os.path.sep) if x][-1]
 
     package_init = os.path.join(startpath, project, '__init__.py')
 
@@ -167,7 +167,7 @@ def generate(startpath='', info=None, project=''):
     date_strings = subprocess.check_output(GIT_DATES_SH, shell=True).split('\n')
     dates = {line.split(',')[0]: dict(
                 zip(['createdate', 'modifydate'], 
-                [parser.parse(x).strftime('%Y-%m-%d %H:%M:00 %z') for x in line.split(',')[1:]])
+                [dateutil.parser.parse(x).strftime('%Y-%m-%d %H:%M:00 %z') for x in line.split(',')[1:]])
             ) for line in date_strings if not line == ''}
 
     # get changed files
