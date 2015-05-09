@@ -1,13 +1,13 @@
 Utilipy
 =======
 
-Random utilities that don't have a home
+Random utilities that don't have a home.
 
 
 Description
 -----------
 
-Version control for small code that may be used/helpful in general python development environment/workflow.
+Version control for small code that is used/helpful in my general python development environment/workflow.
 
 
 Utilities
@@ -19,3 +19,8 @@ Current utilities:
 - ` ` -  
 - ` ` -  
 - ` ` -  
+
+
+License
+-------
+[MIT](https://github.com/tmthydvnprt/utilipy/blob/master/LICENSE)
