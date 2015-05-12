@@ -16,7 +16,7 @@ Utilities
 Current utilities:
 
 - `header.py` - write headers to all files in a project (uses git commit times)
-- ` ` -  
+- `pydoc_markdown.py` - document class to output a markdown document from [pydoc](https://docs.python.org/2/library/pydoc.html)
 - ` ` -  
 - ` ` -  
 
