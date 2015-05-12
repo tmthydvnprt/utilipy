@@ -6,8 +6,8 @@ pydoc_markdown.py - generate python documenation in markdown
 project    : utilipy
 version    : 0.1.0
 status     : development
-modifydate : 2015-05-12 05:21:00 -0700
-createdate : 2015-04-28 06:02:00 -0700
+modifydate : 2015-05-12 05:56:00 -0700
+createdate : 2015-05-12 05:32:00 -0700
 website    : https://github.com/tmthydvnprt/utilipy
 author     : tmthydvnprt
 email      : tmthydvnprt@users.noreply.github.com
@@ -17,6 +17,13 @@ copyright  : Copyright 2015, utilipy
 credits    :
 
 """
+
+# pylint: disable=no-init
+# pylint: disable=no-self-use
+# pylint: disable=too-many-locals
+# pylint: disable=protected-access
+# pylint: disable=too-many-branches
+# pylint: disable=too-many-statements
 
 import os
 import sys
@@ -114,7 +121,6 @@ class MarkdownDoc(pydoc.TextDoc):
             moduleall = None
 
         try:
-#            filepath = os.path.relpath(inspect.getabsfile(obj), os.path.dirname(os.path.dirname(source)))
             filepath = os.path.dirname(inspect.getabsfile(obj))
         except TypeError:
             filepath = '(built-in)'
@@ -350,7 +356,7 @@ def main(source='', output=''):
         module2 = imp.load_source(mod, os.path.join(source, '%s.py' % mod))
         contents.append(CONTENT % (escape_md(mod), escape_md(mod), '%s\n{: .lead}' % module2.__doc__.split('\n')[3]))
 
-    topline = TOPLINE % ('%s docs' % project, '%s documentation' % project, "markdoc.py")
+    topline = TOPLINE % ('%s docs' % project, '%s documentation' % project, "pydoc_markdown.py")
     name = module.__doc__.split('\n')[1]
     desc = '%s\n{: .lead}' % module.__doc__.split('\n')[3]
     indexmd = INDEX % (topline, name, desc, ''.join(contents))
