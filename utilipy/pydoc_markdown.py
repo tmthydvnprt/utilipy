@@ -6,7 +6,7 @@ pydoc_markdown.py - generate python documenation in markdown
 project    : utilipy
 version    : 0.1.0
 status     : development
-modifydate : 2015-05-12 05:56:00 -0700
+modifydate : 2015-05-12 06:36:00 -0700
 createdate : 2015-05-12 05:32:00 -0700
 website    : https://github.com/tmthydvnprt/utilipy
 author     : tmthydvnprt
@@ -28,8 +28,8 @@ credits    :
 import os
 import sys
 import imp
-import glob
 import pydoc
+import fnmatch
 import inspect
 import pkgutil
 import __builtin__
@@ -323,11 +323,16 @@ class MarkdownDoc(pydoc.TextDoc):
 def main(source='', output=''):
     """run pydoc markdown"""
 
-    project = os.path.basename('quilt')
+    # add the source project to the path
+    sys.path.insert(1, os.path.dirname(source))
+    project = os.path.basename(source)
 
     if not os.path.isdir(output):
         os.makedirs(output)
-    py_files = glob.glob(os.path.join(source, '*.py'))
+
+    py_files = [os.path.join(root, f)
+                for root, _, files in os.walk(source)
+                for f in fnmatch.filter(files, '*.py')]
     md_doc = {}
 
     module_names = []
@@ -336,7 +341,7 @@ def main(source='', output=''):
         if name != '__main__':
             module_names.append(os.path.basename(py_file))
             # module document page
-            module = imp.load_source(os.path.splitext(name)[0], py_file)
+            module = imp.load_source(name, py_file)
             mkdn_doc = MarkdownDoc()
             doc = mkdn_doc.document(module)
             md_doc[name] = doc
@@ -348,8 +353,9 @@ def main(source='', output=''):
 
     # store for index page
     py_file = os.path.join(source, '__init__.py')
+    print py_file
     name = os.path.splitext(os.path.basename(py_file))[0]
-    module = imp.load_source(os.path.splitext(name)[0], py_file)
+    module = imp.load_source(name, py_file)
     contents = [CONTENT % (escape_md('__init__'), escape_md('__init__'), 'package module \n{: .lead}')]
 
     for mod in module.__all__:
