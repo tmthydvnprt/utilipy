@@ -1,2 +1,4 @@
-# ignore documentation in repo
+# Detect markdown correctly
+*.md linguist-language=Markdown
+# Ignore documentation in repo
 docs/* linguist-documentation
