@@ -355,11 +355,11 @@ def main(source='', output=''):
     py_file = os.path.join(source, '__init__.py')
     name = os.path.splitext(os.path.basename(py_file))[0]
     module = imp.load_source(name, py_file)
-    contents = [CONTENT % (escape_md('__init__'), escape_md('__init__'), 'package module \n{: .lead}')]
+    contents = [CONTENT % (escape_md('__init__'), escape_md('init'), 'package module \n{: .lead}')]
 
     for mod in module.__all__:
         module2 = imp.load_source(mod, os.path.join(source, '%s.py' % mod))
-        contents.append(CONTENT % (escape_md(mod), escape_md(mod), '%s\n{: .lead}' % module2.__doc__.split('\n')[3]))
+        contents.append(CONTENT % (escape_md(mod), escape_md(mod.replace('_', '').lower()), '%s\n{: .lead}' % module2.__doc__.split('\n')[3]))
 
     topline = TOPLINE % ('%s docs' % project, '%s documentation' % project, "pydoc_markdown.py")
     name = module.__doc__.split('\n')[1]
