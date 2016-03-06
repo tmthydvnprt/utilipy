@@ -346,14 +346,13 @@ def main(source='', output=''):
             doc = mkdn_doc.document(module)
             md_doc[name] = doc
             topline = TOPLINE % ('%s docs: %s' % (project, name), module.__doc__.split('\n')[3], "markdoc.py")
-            linkline = LINKLINE % (name, name)
-            fid = open(os.path.join(output, '%s.md' % name), 'w')
+            linkline = LINKLINE % (name.replace('_', '').lower(), name)
+            fid = open(os.path.join(output, '%s.md' % name.replace('_', '').lower()), 'w')
             fid.write(''.join([topline, linkline, md_doc[name]]))
             fid.close()
 
     # store for index page
     py_file = os.path.join(source, '__init__.py')
-    print py_file
     name = os.path.splitext(os.path.basename(py_file))[0]
     module = imp.load_source(name, py_file)
     contents = [CONTENT % (escape_md('__init__'), escape_md('__init__'), 'package module \n{: .lead}')]
